@@ -10,7 +10,7 @@
     <script type="text/javascript">
       //Sizing 
       var w = 1000;
-      var h = 700;
+      var h = 600;
       var margin = 50;
       
       //Global variables
@@ -55,7 +55,7 @@
         var yAxis = d3.svg.axis()
                         .scale(yScale)
                         .orient("left")
-                        .innerTickSize(-w)
+                        .innerTickSize(-w) //Grids
                         .outerTickSize(0)
                         .tickPadding(10);
 
@@ -68,6 +68,32 @@
           .attr("class", "axis")
           .attr("transform", "translate(" + margin + ", 0)")
           .call(yAxis);
+        
+        //Axis label
+        svg.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "end")
+          .attr("x", w/2)
+          .attr("y", h - 6)
+          .text("Years");
+
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("x", -h/3)
+          .attr("y", 6)
+          .attr("dy", ".75em")
+          .attr("transform", "rotate(-90)")
+          .text("Tempurature in degrees Fahrenheit");
+        
+        //Title 
+        svg.append("text")
+          .attr("class", "graph-title")
+          .attr("text-anchor", "end")
+          .attr("x", w/1.5)
+          .attr("y", margin - 10)
+          .text("Tempurature of Miami over the years");
+
 
         
         //Circles/////////////////////////
