@@ -19,7 +19,7 @@
     </div>
     <script type="text/javascript">
       //Sizing 
-      var w = parseInt(d3.select('#content').style('width'));
+      var w = parseInt(d3.select('#content').style('width')) - 50;
       var h = 600;
       var margin = 50;
       
@@ -100,7 +100,7 @@
         svg.append("text")
           .attr("class", "graph-title")
           .attr("text-anchor", "end")
-          .attr("x", w/1.5)
+          .attr("x", w/1.6)
           .attr("y", margin - 10)
           .text("Tempurature of Miami over the years");
 
