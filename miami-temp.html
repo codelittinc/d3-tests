@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Miami Temp</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -9,7 +10,7 @@
   <body>
     <script type="text/javascript">
       //Sizing 
-      var w = 1000;
+      var w = parseInt(d3.select('body').style('width'));
       var h = 600;
       var margin = 50;
       
