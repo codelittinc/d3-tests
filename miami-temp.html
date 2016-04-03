@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Miami Temp</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <script type="text/javascript">
+      //Sizing 
+      var w = 1000;
+      var h = 600;
+      var margin = 50;
+      
+      //Global variables
+      var dataset;
+      
+      //Create SVG
+      var svg = d3.select("body")
+                  .append("svg")
+                  .attr("width", w)
+                  .attr("height", h);
+      
+      
+
+      //Dataset
+      d3.csv("./bigdata.csv", function(data) {
+        dataset = data;
+      
+        
+        //Scales//////////////////////////////
+        var xScale = d3.time.scale()
+                            .domain([new Date(1947, 12, 1), new Date(2016, 1, 31)])
+                            .range([margin, w]);
+        var yScale = d3.scale.linear()
+                            .domain([40, d3.max(dataset, function(d) { return d.temp; })])
+                            .range([h - margin, margin]);
+        
+        var rScale = d3.scale.threshold()
+                              .domain([60, 85])
+                              .range([5, 2, 5]);
+
+        var colorScale = d3.scale.linear()
+                              .domain([40, d3.max(dataset, function(d) {return d.temp;})])
+                              .range(["blue", "red"]);
+        
+        //Axes ////////////////////////////
+        var xAxis = d3.svg.axis()
+                        .scale(xScale)
+                        .orient('bottom')
+                        .ticks(d3.time.years, 5)
+                        .tickFormat(d3.time.format('%Y'));
+
+        var yAxis = d3.svg.axis()
+                        .scale(yScale)
+                        .orient("left")
+                        .innerTickSize(-w) //Grids
+                        .outerTickSize(0)
+                        .tickPadding(10);
+
+        svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(0, " + (h - margin) + ")")
+          .call(xAxis);
+
+        svg.append("g")
+          .attr("class", "axis")
+          .attr("transform", "translate(" + margin + ", 0)")
+          .call(yAxis);
+        
+        //Axis label
+        svg.append("text")
+          .attr("class", "x label")
+          .attr("text-anchor", "end")
+          .attr("x", w/2)
+          .attr("y", h - 6)
+          .text("Years");
+
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("x", -h/3)
+          .attr("y", 6)
+          .attr("dy", ".75em")
+          .attr("transform", "rotate(-90)")
+          .text("Tempurature in degrees Fahrenheit");
+        
+        //Title 
+        svg.append("text")
+          .attr("class", "graph-title")
+          .attr("text-anchor", "end")
+          .attr("x", w/1.5)
+          .attr("y", margin - 10)
+          .text("Tempurature of Miami over the years");
+
+
+        
+        //Circles/////////////////////////
+        //Start position and create the circles
+        svg.selectAll("circle")
+          .data(dataset)
+          .enter()
+          .append("circle")
+          .attr("cx", function(d) { return xScale(0); })
+          .attr("cy", function(d) { return yScale(0); })
+          .attr("r", function(d) { return rScale(0); })
+          .attr("fill", function(d) {
+            return colorScale(d.temp);
+          })
+          .attr("opacity", .5)
+          .append("svg:title")
+          .text(function(d) { return d.mo + "/" + d.da + "/" + d.year + " @ " + d.temp + " degrees"; });
+        
+          
+        //Transition to real data points
+
+        svg.selectAll("circle")
+          .transition()
+          .duration(1000)
+          .attr("cx", function(d) {
+            return xScale(new Date(d.year, d.mo, d.da));
+          })
+          .attr("cy", function(d) {
+            return yScale(d.temp);
+          })
+          .attr("r", function(d) {
+            return rScale(d.temp);
+          })
+          ;
+
+
+      });
+      
+
+                  
+
+    </script>
+
+    <p class"about-text">A little bit about this visualization: <br />
+      Each circle represents a single day and the mean temperature for that day. Hovering over a circle will give you the date and mean degrees for that date. Hotter days are red and cooler days are blue. I wanted to show the extremes so there is a threshold set for temps under 60 or over 85 degrees which increases the radius of the circle. These tempuratures would be considered quite extreme here. As time goes on, the extremes become more frequent and you can see the general trend in the highs growing greater.</p>
+
+  </body>
+</html>
