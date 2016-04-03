@@ -1,6 +1,9 @@
 body {
-  max-width: 1600px;
   margin: 20px;
+}
+
+#content {
+  max-width: 1600px;
 }
 
 div.bar { 

@@ -8,9 +8,18 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
+    <div id="content">
+      <div class="viz"></div>
+      <div id="about">
+        <p class"about-text">A little bit about this visualization: <br />
+          Each circle represents a single day and the mean temperature for that day. Hovering over a circle will give you the date and mean degrees for that date. Hotter days are red and cooler days are blue. I wanted to show the extremes so there is a threshold set for temps under 60 or over 85 degrees which increases the radius of the circle. These tempuratures would be considered quite extreme here. As time goes on, the extremes become more frequent and you can see the general trend in the highs growing greater.</p>
+  
+        <h3><a href="/">< Back</a></h3>
+      </div>
+    </div>
     <script type="text/javascript">
       //Sizing 
-      var w = parseInt(d3.select('body').style('width'));
+      var w = parseInt(d3.select('#content').style('width'));
       var h = 600;
       var margin = 50;
       
@@ -18,7 +27,7 @@
       var dataset;
       
       //Create SVG
-      var svg = d3.select("body")
+      var svg = d3.select(".viz")
                   .append("svg")
                   .attr("width", w)
                   .attr("height", h);
@@ -137,11 +146,5 @@
                   
 
     </script>
-
-    <p class"about-text">A little bit about this visualization: <br />
-      Each circle represents a single day and the mean temperature for that day. Hovering over a circle will give you the date and mean degrees for that date. Hotter days are red and cooler days are blue. I wanted to show the extremes so there is a threshold set for temps under 60 or over 85 degrees which increases the radius of the circle. These tempuratures would be considered quite extreme here. As time goes on, the extremes become more frequent and you can see the general trend in the highs growing greater.</p>
-  
-    <h3><a href="/">< Back</a></h3>
-
   </body>
 </html>
