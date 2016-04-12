@@ -75,7 +75,7 @@
           .attr("transform", function(d) {return "translate(" + projection([d.values.longitude,d.values.latitude]) + ")";})
           .attr("stroke", "#fff")
           .append("svg:title")
-          .text(function(d) { return d.values.locationTo; });
+          .text(function(d) { return d.values.locationTo[0]; });
       });
               
     </script>
