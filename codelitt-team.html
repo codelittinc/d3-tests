@@ -57,11 +57,10 @@
           .rollup(function(v)  { return {
             count: v.length,
             //There has to be a better way besides d3 max, but can't get normal array functions to work
-            //TODO: Don't use max. Should be some sort of forEach? 
+            //TODO: Don't use max. Should be some sort of map? 
             latitude: d3.max(v, function(d) { return d.latitude }),
             longitude: d3.max(v, function(d) { return d.longitude }),
-            //WHY WON'T forEACH WORKKKKk
-            locationTo: v.forEach(function(d) { return d.city + "," + d.state + "," + d.country })
+            locationTo: v.map(function(d) { return d.city + "," + d.state + "," + d.country })
           }; })
           .entries(dataset);
 
