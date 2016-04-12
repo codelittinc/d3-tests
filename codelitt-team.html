@@ -13,7 +13,7 @@
       <div class="viz"></div>
       <div id="about">
         <p class"about-text">A little bit about this visualization:</p>
-        <p><strong>UNFINISHED</strong></p>
+        <p>This is a geo-representation of where Codelitt Incubator is represented around the world and a tesimony to our diversity. The larger a circle is, the more people in that particular city.</p>
   
         <h3><a href="/">< Back</a></h3>
       </div>
@@ -37,6 +37,8 @@
         .projection(projection);
 
       var g = svg.append("g");
+      
+      //Draws countries
 
       d3.json("world-110m2.json", function(error, topology) {
         g.selectAll("path")
@@ -45,7 +47,36 @@
           .append("path")
           .attr("d", path)
           .attr("fill", "#ADD8E6")
-          .attr("stroke", "#C0C0C0");
+          .attr("stroke", "#FFF");
+      });
+
+      d3.csv("codelitt-team.csv", function(dataset) {
+        //Creates a nested set of data and provides the count per city which is most important
+        var countByCity = d3.nest()
+          .key(function(d) { return d.city; })
+          .rollup(function(v)  { return {
+            count: v.length,
+            //There has to be a better way besides d3 max, but can't get normal array functions to work
+            //TODO: Don't use max. Should be some sort of forEach? 
+            latitude: d3.max(v, function(d) { return d.latitude }),
+            longitude: d3.max(v, function(d) { return d.longitude }),
+            //WHY WON'T forEACH WORKKKKk
+            locationTo: v.forEach(function(d) { return d.city + "," + d.state + "," + d.country })
+          }; })
+          .entries(dataset);
+
+        //Circle for each person
+        svg.selectAll("circle")
+          .data(countByCity)
+          .enter()
+          .append("circle")
+          .attr("fill", "green")  
+          .attr("opacity", .5)
+          .attr("r", function(d) { return 5 * d.values.count })
+          .attr("transform", function(d) {return "translate(" + projection([d.values.longitude,d.values.latitude]) + ")";})
+          .attr("stroke", "#fff")
+          .append("svg:title")
+          .text(function(d) { return d.values.locationTo; });
       });
               
     </script>
