@@ -56,8 +56,7 @@
           .key(function(d) { return d.city; })
           .rollup(function(v)  { return {
             count: v.length,
-            //There has to be a better way besides d3 max, but can't get normal array functions to work
-            //TODO: Don't use max. Should be some sort of map? 
+            //TODO: Don't use max. Should be some sort of map, but I'm lazy now. 
             latitude: d3.max(v, function(d) { return d.latitude }),
             longitude: d3.max(v, function(d) { return d.longitude }),
             locationTo: v.map(function(d) { return d.city + "," + d.state + "," + d.country })
