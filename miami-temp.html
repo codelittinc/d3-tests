@@ -12,7 +12,7 @@
       <div class="viz"></div>
       <div id="about">
         <p class"about-text">A little bit about this visualization: <br />
-          Each circle represents a single day and the mean temperature for that day. Hovering over a circle will give you the date and mean degrees for that date. Hotter days are red and cooler days are blue. I wanted to show the extremes so there is a threshold set for temps under 60 or over 85 degrees which increases the radius of the circle. These tempuratures would be considered quite extreme here. As time goes on, the extremes become more frequent and you can see the general trend in the highs growing greater.</p>
+          Each circle represents a single day and the mean temperature for that day. Hovering over a circle will give you the date and mean degrees for that date. Hotter days are red and cooler days are blue. I wanted to show the extremes so there is a threshold set for temps under 60 or over 85 degrees which increases the radius of the circle. These temperatures would be considered quite extreme here. As time goes on, the extremes become more frequent and you can see the general trend in the highs growing greater.</p>
   
         <h3><a href="/">< Back</a></h3>
       </div>
@@ -94,7 +94,7 @@
           .attr("y", 6)
           .attr("dy", ".75em")
           .attr("transform", "rotate(-90)")
-          .text("Tempurature in degrees Fahrenheit");
+          .text("Temperature in degrees Fahrenheit");
         
         //Title 
         svg.append("text")
@@ -102,7 +102,7 @@
           .attr("text-anchor", "end")
           .attr("x", w/1.6)
           .attr("y", margin - 10)
-          .text("Tempurature of Miami over the years");
+          .text("Temperature of Miami over the years");
 
 
         
