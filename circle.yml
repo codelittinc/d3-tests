@@ -1,0 +1,18 @@
+machine:
+  services:
+    - docker
+deployment:
+  qa:
+    branch: develop
+    commands:
+      - docker build -f docker/Dockerfile -t codelittinc/codelitt-labs:latest .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push codelittinc/codelitt-labs:latest
+      - DEPLOY_USER=$QA_DEPLOY_USER DEPLOY_HOST=$QA_DEPLOY_HOST VERSION=latest sh bin/cideploy.sh
+  production:
+    tag: /version-.*/
+    commands:
+      - docker build -f docker/Dockerfile -t codelittinc/codelitt-labs:$CIRCLE_TAG .
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push codelittinc/codelitt-labs:$CIRCLE_TAG
+      - DEPLOY_USER=$PROD_DEPLOY_USER DEPLOY_HOST=$PROD_DEPLOY_HOST VERSION=$CIRCLE_TAG sh bin/cideploy.sh
