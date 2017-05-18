@@ -1,0 +1,9 @@
+version: '2'
+services:
+  codelitt-labs:
+    image: codelittinc/codelitt-labs
+    container_name: codelitt-labs
+networks:
+  default:
+    external:
+      name: codelitt
