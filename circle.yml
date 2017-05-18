@@ -1,6 +1,9 @@
 machine:
   services:
     - docker
+test:
+  override:
+    - echo "no tests for this static website"
 deployment:
   qa:
     branch: develop
